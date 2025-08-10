@@ -12,15 +12,15 @@ const addQuoteBtn = document.getElementById('addQuoteBtn');
 const newQuoteText = document.getElementById('newQuoteText');
 const newQuoteCategory = document.getElementById('newQuoteCategory');
 
-// Show a random quote
-function showRandomQuote() {
+// Display a random quote
+function displayRandomQuote() {
   if (quotes.length === 0) {
-    quoteDisplay.textContent = "No quotes available.";
+    quoteDisplay.innerHTML = "<em>No quotes available.</em>";
     return;
   }
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const { text, category } = quotes[randomIndex];
-  quoteDisplay.textContent = `"${text}" — ${category}`;
+  quoteDisplay.innerHTML = `"${text}" — <strong><em>${category}</em></strong>`;
 }
 
 // Add a new quote dynamically
@@ -44,5 +44,5 @@ function addQuote() {
 }
 
 // Event Listeners
-newQuoteBtn.addEventListener('click', showRandomQuote);
+newQuoteBtn.addEventListener('click', displayRandomQuote);
 addQuoteBtn.addEventListener('click', addQuote);
