@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dynamic Quote Generator</title>
   <style>
     body {
@@ -46,11 +46,7 @@
   <div id="quoteDisplay">Click "Show New Quote" to get started</div>
   <button id="newQuote">Show New Quote</button>
 
-  <div class="form-group">
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuoteBtn">Add Quote</button>
-  </div>
+  <div id="formContainer"></div> <!-- Form will be created here dynamically -->
 
   <script src="script.js"></script>
 </body>

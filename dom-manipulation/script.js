@@ -8,11 +8,11 @@ let quotes = [
 // DOM Elements
 const quoteDisplay = document.getElementById('quoteDisplay');
 const newQuoteBtn = document.getElementById('newQuote');
-const addQuoteBtn = document.getElementById('addQuoteBtn');
-const newQuoteText = document.getElementById('newQuoteText');
-const newQuoteCategory = document.getElementById('newQuoteCategory');
+const formContainer = document.getElementById('formContainer');
 
-// Show a random quote
+let newQuoteTextInput, newQuoteCategoryInput, addQuoteButton;
+
+// Function to show a random quote
 function showRandomQuote() {
   if (quotes.length === 0) {
     quoteDisplay.innerHTML = "<em>No quotes available.</em>";
@@ -23,26 +23,65 @@ function showRandomQuote() {
   quoteDisplay.innerHTML = `"${text}" — <strong><em>${category}</em></strong>`;
 }
 
-// Add a new quote dynamically
+// Function to add a new quote
 function addQuote() {
-  const text = newQuoteText.value.trim();
-  const category = newQuoteCategory.value.trim();
+  const text = newQuoteTextInput.value.trim();
+  const category = newQuoteCategoryInput.value.trim();
 
   if (!text || !category) {
     alert("Please enter both a quote and a category.");
     return;
   }
 
-  const newQuote = { text, category };
-  quotes.push(newQuote);
+  quotes.push({ text, category });
 
   // Clear inputs
-  newQuoteText.value = '';
-  newQuoteCategory.value = '';
+  newQuoteTextInput.value = '';
+  newQuoteCategoryInput.value = '';
 
   alert("Quote added successfully!");
 }
 
-// Event Listeners
-newQuoteBtn.addEventListener('click', showRandomQuote);
-addQuoteBtn.addEventListener('click', addQuote);
+// Function to dynamically create the Add Quote form
+function createAddQuoteForm() {
+  // Create a div to group form inputs
+  const formGroup = document.createElement('div');
+  formGroup.classList.add('form-group');
+
+  // Create input for quote text
+  newQuoteTextInput = document.createElement('input');
+  newQuoteTextInput.type = 'text';
+  newQuoteTextInput.id = 'newQuoteText';
+  newQuoteTextInput.placeholder = 'Enter a new quote';
+
+  // Create input for quote category
+  newQuoteCategoryInput = document.createElement('input');
+  newQuoteCategoryInput.type = 'text';
+  newQuoteCategoryInput.id = 'newQuoteCategory';
+  newQuoteCategoryInput.placeholder = 'Enter quote category';
+
+  // Create add quote button
+  addQuoteButton = document.createElement('button');
+  addQuoteButton.id = 'addQuoteBtn';
+  addQuoteButton.textContent = 'Add Quote';
+
+  // Append inputs and button to form group
+  formGroup.appendChild(newQuoteTextInput);
+  formGroup.appendChild(newQuoteCategoryInput);
+  formGroup.appendChild(addQuoteButton);
+
+  // Append form group to the container div
+  formContainer.appendChild(formGroup);
+
+  // Add event listener for addQuoteButton
+  addQuoteButton.addEventListener('click', addQuote);
+}
+
+// Initialize app
+function init() {
+  createAddQuoteForm();
+  newQuoteBtn.addEventListener('click', showRandomQuote);
+}
+
+// Run initialization on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', init);
