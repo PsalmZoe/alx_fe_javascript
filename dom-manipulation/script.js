@@ -24,7 +24,7 @@ function showRandomQuote() {
 }
 
 // Add a new quote dynamically
-function addQuote() {
+function createAddQuoteForm() {
   const text = newQuoteText.value.trim();
   const category = newQuoteCategory.value.trim();
 
