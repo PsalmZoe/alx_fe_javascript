@@ -20,9 +20,6 @@ const STORAGE_KEY = 'dynamicQuotes';
 const SESSION_KEY = 'lastQuoteIndex';
 const CATEGORY_KEY = 'selectedCategory';
 
-// --- Simulated Server URL (JSONPlaceholder example) ---
-const SERVER_URL = 'https://jsonplaceholder.typicode.com/posts';
-
 // --- Notification Element ---
 const syncNotification = document.createElement('div');
 syncNotification.style.position = 'fixed';
@@ -205,18 +202,19 @@ function notifyUser(message) {
 }
 
 // --- Fetch quotes from simulated server ---
-async function fetchServerQuotes() {
+async function fetchQuotesFromServer() {
   try {
-    const response = await fetch(SERVER_URL);
-    const serverData = await response.json();
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
 
-    // Simulate server quotes (limit and transform to app format)
-    return serverData.slice(0, 5).map(item => ({
-      text: item.title,
+    // Map server data to your quote format (limit to first 5)
+    return data.slice(0, 5).map(post => ({
+      text: post.title,
       category: 'Server'
     }));
   } catch (error) {
-    console.error('Failed to fetch server quotes:', error);
+    console.error('Error fetching quotes from server:', error);
     return [];
   }
 }
@@ -245,7 +243,7 @@ function mergeQuotes(serverQuotes) {
 
 // --- Periodic sync with server ---
 async function syncWithServer() {
-  const serverQuotes = await fetchServerQuotes();
+  const serverQuotes = await fetchQuotesFromServer();
   mergeQuotes(serverQuotes);
 }
 
@@ -255,7 +253,6 @@ function init() {
   createAddQuoteForm();
   populateCategories();
 
-  // Show a quote on load with filter
   showRandomQuote();
 
   newQuoteBtn.addEventListener('click', showRandomQuote);
