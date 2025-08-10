@@ -13,7 +13,7 @@ const newQuoteText = document.getElementById('newQuoteText');
 const newQuoteCategory = document.getElementById('newQuoteCategory');
 
 // Display a random quote
-function displayRandomQuote() {
+function showRandomQuote() {
   if (quotes.length === 0) {
     quoteDisplay.innerHTML = "<em>No quotes available.</em>";
     return;
