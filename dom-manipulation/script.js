@@ -13,7 +13,7 @@ const newQuoteText = document.getElementById('newQuoteText');
 const newQuoteCategory = document.getElementById('newQuoteCategory');
 
 // Display a random quote
-function showRandomQuote() {
+function displayRandomQuote() {
   if (quotes.length === 0) {
     quoteDisplay.innerHTML = "<em>No quotes available.</em>";
     return;
@@ -24,7 +24,7 @@ function showRandomQuote() {
 }
 
 // Add a new quote dynamically
-function createAddQuoteForm() {
+function addQuote() {
   const text = newQuoteText.value.trim();
   const category = newQuoteCategory.value.trim();
 
