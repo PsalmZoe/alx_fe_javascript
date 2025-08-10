@@ -119,6 +119,9 @@ function addQuote() {
 
   alert("Quote added successfully!");
   showRandomQuote();
+
+  // Send updated quotes to server
+  sendQuotesToServer(quotes);
 }
 
 // --- Create the quote submission form ---
@@ -219,6 +222,26 @@ async function fetchQuotesFromServer() {
   }
 }
 
+// --- Send quotes to server via POST ---
+async function sendQuotesToServer(quotesToSend) {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',                    // POST method
+      headers: {
+        'Content-Type': 'application/json'  // JSON header
+      },
+      body: JSON.stringify(quotesToSend)    // Payload as JSON string
+    });
+
+    if (!response.ok) throw new Error('Failed to send quotes to server');
+
+    const data = await response.json();
+    console.log('Quotes successfully sent:', data);
+  } catch (error) {
+    console.error('Error sending quotes:', error);
+  }
+}
+
 // --- Merge server quotes, server wins ---
 function mergeQuotes(serverQuotes) {
   let updated = false;
@@ -245,6 +268,9 @@ function mergeQuotes(serverQuotes) {
 async function syncWithServer() {
   const serverQuotes = await fetchQuotesFromServer();
   mergeQuotes(serverQuotes);
+
+  // Optionally send local quotes back to server (simulate two-way sync)
+  await sendQuotesToServer(quotes);
 }
 
 // --- Initialization ---
