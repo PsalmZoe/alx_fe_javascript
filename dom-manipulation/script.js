@@ -260,7 +260,7 @@ function mergeQuotes(serverQuotes) {
     saveQuotes();
     populateCategories();
     showRandomQuote();
-    notifyUser('New quotes synced from server and merged.');
+    notifyUser('Quotes synced with server!');
   }
 }
 
