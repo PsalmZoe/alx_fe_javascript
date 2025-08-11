@@ -264,13 +264,18 @@ function mergeQuotes(serverQuotes) {
   }
 }
 
-// --- Periodic sync with server ---
+// --- Actual syncing function ---
 async function syncWithServer() {
   const serverQuotes = await fetchQuotesFromServer();
   mergeQuotes(serverQuotes);
 
   // Optionally send local quotes back to server (simulate two-way sync)
   await sendQuotesToServer(quotes);
+}
+
+// --- New wrapper function syncQuotes as requested ---
+async function syncQuotes() {
+  await syncWithServer();
 }
 
 // --- Initialization ---
@@ -286,11 +291,11 @@ function init() {
   importFileInput.addEventListener('change', importFromJsonFile);
   categoryFilter.addEventListener('change', filterQuotes);
 
-  // Sync every 60 seconds
-  setInterval(syncWithServer, 60000);
+  // Sync every 60 seconds using syncQuotes
+  setInterval(syncQuotes, 60000);
 
   // Initial sync on load
-  syncWithServer();
+  syncQuotes();
 }
 
 document.addEventListener('DOMContentLoaded', init);
